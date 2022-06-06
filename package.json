@@ -1,0 +1,25 @@
+{
+  "name": "real-time-wysiwyg",
+  "version": "0.0.0",
+  "description": "A real time wysiwyg editor with Socket.io and Quill.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "real-time-wysiwyg"
+  },
+  "keywords": [
+    "wysiwyg"
+  ],
+  "author": "Eduardo Almeida",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "fastq": "^1.11.1",
+    "jsonwebtoken": "^8.5.1",
+    "md5": "^2.3.0",
+    "socket.io": "^4.4.1"
+  }
+}
