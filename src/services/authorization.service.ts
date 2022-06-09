@@ -12,10 +12,10 @@ export const tokenVerify = (token: string, key: string): any => {
     return jwt.verify(token, HashKey);
 }
 
-export const getTokenData = (id: number, id_cliente: number, level: number, key: string, genRefreshToken?: boolean, expire?: number): { token: string, refreshToken?: string } => {
+export const getTokenData = (id: number, key: string, genRefreshToken?: boolean, expire?: number): { token: string, refreshToken?: string } => {
     const genToken = (data: any, key: string, expire: number): string => jwt.sign({ data }, jwtHash(key), { expiresIn: expire });
     return {
-        token: genToken({ id, id_cliente, level, type: 1 }, key, expire ? expire * 60 : 600),
-        refreshToken: genRefreshToken ? genToken({ id, id_cliente, level, type: 2 }, key, 3600 * 24 * 5) : undefined
+        token: genToken({ id, type: 1 }, key, expire ? expire * 60 : 600),
+        refreshToken: genRefreshToken ? genToken({ id, type: 2 }, key, 3600 * 24 * 5) : undefined
     }
 }

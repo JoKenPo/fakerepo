@@ -1,6 +1,6 @@
 import crypto from "crypto";
 
-const salt = process.env.CIPHER_SALT || 'jhci@4!5233rfsd56$*&45t%4#@r78#';
+const salt = process.env.CIPHER_SALT || '123';
 
 const Right = (str, n) => {
     if (n <= 0) return "";
