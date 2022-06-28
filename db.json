@@ -1,0 +1,16 @@
+{
+  "usuarios": [
+    {
+      "id_usuario": 1,
+      "nome": "Eduardo Almeida",
+      "departamento": "Desenvolvimento",
+      "id_permissao": 1,
+      "acesso": "Admin",
+      "url_foto": "https://avatars.githubusercontent.com/u/3427820?v=4",
+      "cliente": {
+        "id": 1,
+        "nome": "GitHub"
+      }
+    }
+  ]
+}

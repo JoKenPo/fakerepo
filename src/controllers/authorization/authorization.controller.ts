@@ -1,5 +1,5 @@
 import md5 from 'md5'
-// import { Connection } from '../../repositories/_cnn';
+import { Connection } from '../../repositories/_cnn';
 import { ControllerBase } from '../_controller.base';
 import { tokenVerify, getTokenData } from '../../services/authorization.service';
 
@@ -40,9 +40,14 @@ export class AuthorizationController extends ControllerBase {
     async Login({ email, password }: { email: string, password: string }) {
         try {
             const hash = md5(password);
+            /* 
+            Conexão via SQL 
             // const cnn = new Connection(this.dbKey);
             // const user = await new UsuarioLoginRepository(cnn).Login(email, hash);
+            */
+
             const user = {id:1, nome:'Eduardo'}
+            console.log('user: ',user);
             if (user) return { user, auth: getTokenData(user.id, this.dbKey, true) };
         } catch { };
         throw new Error("Access Denied");

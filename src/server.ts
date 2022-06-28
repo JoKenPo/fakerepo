@@ -20,6 +20,9 @@ import {
 
 import { IOServer } from "./services/Socket.Service";
 import { ILoggedUser } from "./controllers/authorization/authorization.controller";
+import { PublicRoutes } from "./routes/_public.routes";
+import { PrivateRoutes } from "./routes/_private.routes";
+import { RoutesBase } from "./routes/_routes.base";
 
 declare global {
   namespace Express {
@@ -83,7 +86,7 @@ if (!process.env.DEBUG) loggerOptions.meta = false;
 export default class Server {
   private app: express.Application;
   private server: http.Server;
-  // private routes: Array<RoutesBase> = [];
+  private routes: Array<RoutesBase> = [];
   private debugLog: debug.IDebugger;
   private io: SocketIO.Server;
 
@@ -100,8 +103,8 @@ export default class Server {
       },
       transports: ["websocket", "polling"],
       cors: {
-        origin: "http://localhost:3000", //Precisa disso para funcionar local
-        // origin: "*",
+        // origin: "http://localhost:3000", //Precisa disso para funcionar local
+        origin: "*",
         methods: ["GET", "POST"],
         credentials: true,
         // allowedHeaders: ["authorization"],
@@ -109,7 +112,9 @@ export default class Server {
     });
     IOServer(this.io);
     this.initializeMiddlewares();
+    PublicRoutes(this.routes, this.app);
     AuthorizationMiddleware(this.app);
+    PrivateRoutes(this.routes, this.app);
     this.initializeErrorMiddlewares();
   }
 

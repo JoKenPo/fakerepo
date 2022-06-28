@@ -48,7 +48,7 @@ export function SetOriginKey(
   next: express.NextFunction
 ) {
   try {
-    let key = req.headers.key;
+    let key = req.headers.ke
     if (process.env.NODE_ENV === "development" && !key)
       key = "localhost";
     if (key && key.toString() != "") {
