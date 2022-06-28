@@ -2,6 +2,7 @@ import mapper from 'object-mapper';
 import { RepositoryBase } from '../_repository.base';
 import { Connection } from '../_cnn';
 import { LoginResultMapper, usuarioPermissao } from './Usuario.Login.repository';
+import { api } from '../../services/axios.service';
 // import { LoginResultMapper, usuarioPermissao } from '../constants/usuarios.constats';
 
 export class UsuarioMeRepository extends RepositoryBase {
@@ -39,5 +40,27 @@ export class UsuarioMeRepository extends RepositoryBase {
     };
 
 
+}
+
+export class UsuarioMeRESTRepository {
+
+  async Me(id: number): Promise<any> {
+    try {
+      let result = {}
+
+      await api(`usuarios/${id}`)
+        .then(async response => {
+          if (response.data.length > 0) {
+            const user = response.data[0];
+              result = mapper.merge({
+                ...response,
+                permissao: usuarioPermissao(user.id_permissao)
+            }, LoginResultMapper);
+            return result;// as ILoginResult;
+          }
+      })
+      return result
+    } catch { }
+  }
 }
 

@@ -1,8 +1,10 @@
 {
   "usuarios": [
     {
-      "id_usuario": 1,
+      "id": 1,
       "nome": "Eduardo Almeida",
+      "email": "eduardo.almeida.job@gmail.com",
+      "password": "ae5515e371a599b8d82b244212209283",
       "departamento": "Desenvolvimento",
       "id_permissao": 1,
       "acesso": "Admin",
