@@ -19,7 +19,7 @@ import {
 } from "./middlewares/authorization.middleware";
 
 import { IOServer } from "./services/Socket.Service";
-import { ILoggedUser } from "./controller/authorization/authorization.controller";
+import { ILoggedUser } from "./controllers/authorization/authorization.controller";
 
 declare global {
   namespace Express {

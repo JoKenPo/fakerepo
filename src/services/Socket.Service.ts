@@ -2,7 +2,7 @@ import * as SocketIO from "socket.io";
 import fastq, { queueAsPromised } from "fastq";
 import { tokenVerify } from "./authorization.service";
 import { SetKey } from "../middlewares/authorization.middleware";
-import { ILoggedUser } from "../controller/authorization/authorization.controller";
+import { ILoggedUser } from "../controllers/authorization/authorization.controller";
 
 const CONCURRENCY = 1;
 
@@ -17,13 +17,10 @@ const colors = [
 
 /*
 
-    Exemp´lo de uso:
-
+    Exemplo de uso:
     na controller:
 
-
-    IOSendToClient('ParlamentarUpdate', this.dbKey, this.user.id_cliente, { id_parlamentar: id, data })
-
+    IOSendToClient('UsuarioUpdate', this.dbKey, this.user.id_cliente, { id_parlamentar: id, data })
 
 */
 
