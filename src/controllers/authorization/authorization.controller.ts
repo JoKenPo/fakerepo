@@ -1,7 +1,9 @@
 import md5 from 'md5'
-// import { Connection } from '../../repositories/_cnn';
+import { Connection } from '../../repositories/_cnn';
 import { ControllerBase } from '../_controller.base';
 import { tokenVerify, getTokenData } from '../../services/authorization.service';
+import { UsuarioLoginRESTRepository } from '../../repositories/usuario/Usuario.Login.repository';
+import { UsuarioMeRESTRepository } from '../../repositories/usuario/Usuario.Me.repository';
 
 
 // Usuario Logado /////////////////////////////////
@@ -40,9 +42,12 @@ export class AuthorizationController extends ControllerBase {
     async Login({ email, password }: { email: string, password: string }) {
         try {
             const hash = md5(password);
+            /* 
+            Conexão via SQL 
             // const cnn = new Connection(this.dbKey);
             // const user = await new UsuarioLoginRepository(cnn).Login(email, hash);
-            const user = {id:1, nome:'Eduardo'}
+            */
+           const user = await new UsuarioLoginRESTRepository().Login(email, hash)
             if (user) return { user, auth: getTokenData(user.id, this.dbKey, true) };
         } catch { };
         throw new Error("Access Denied");
@@ -55,9 +60,12 @@ export class AuthorizationController extends ControllerBase {
                 await this.Cache.Set(`${this.dbKey}${this.getName()}me${this.user.id}`, cache, 120)
                 return cache;
             }
+            /* 
+            Conexão via SQL 
             // const cnn = new Connection(this.dbKey);
             // const user = await new UsuarioMeRepository(cnn).Me(this.user.id);
-            const user = {id:1, nome:'Eduardo'}
+            */
+            const user = await new UsuarioMeRESTRepository().Me(this.user.id)
             await this.Cache.Set(`${this.dbKey}${this.getName()}me${this.user.id}`, user, 120)
             return user
         } catch { }
