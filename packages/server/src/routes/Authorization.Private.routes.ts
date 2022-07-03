@@ -1,5 +1,5 @@
 import express from 'express';
-import { RoutesBase } from './_routes.base';
+import { RoutesBase } from './_base.routes';
 import { AuthorizationController } from '../controllers/authorization/authorization.controller';
 import { isAnyLevel, isMaster, isMasterOrReadOnlyOrNormal } from '../middlewares/authorization.middleware';
 

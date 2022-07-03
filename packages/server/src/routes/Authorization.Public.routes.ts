@@ -1,6 +1,6 @@
 import express from 'express';
 import { AuthorizationController } from '../controllers/authorization/authorization.controller';
-import { RoutesBase } from './_routes.base';
+import { RoutesBase } from './_base.routes';
 
 export class AuthorizationPublicRoutes extends RoutesBase {
 

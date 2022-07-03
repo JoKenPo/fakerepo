@@ -1,9 +1,11 @@
+node_modules
 /node_modules
 /build
+dist
 /dist
 /secret
 /secrets
-secrets.json 
+secrets.json
 
 .DS_Store
 

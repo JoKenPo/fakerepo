@@ -4,6 +4,6 @@
   "quoteProps": "consistent",
   "endOfLine": "auto",
   "arrowParens": "avoid",
-  "useTabs": false,
+  "useTabs": true,
   "tabWidth": 2
 }

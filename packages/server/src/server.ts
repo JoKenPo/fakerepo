@@ -22,7 +22,7 @@ import { IOServer } from "./services/Socket.Service";
 import { ILoggedUser } from "./controllers/authorization/authorization.controller";
 import { PublicRoutes } from "./routes/_public.routes";
 import { PrivateRoutes } from "./routes/_private.routes";
-import { RoutesBase } from "./routes/_routes.base";
+import { RoutesBase } from "./routes/_base.routes";
 
 declare global {
   namespace Express {
