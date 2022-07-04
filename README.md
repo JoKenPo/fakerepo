@@ -1,12 +1,16 @@
-# Editor Quill Real Time [Em Construção]
+# FakeRepo [Em Construção]
 
 Projeto de editor a real time com boas práticas e teste de outras metodologias
+
+<p align="center">
+🚧 wip 🚧
+</p>
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm run server`
 
 Runs the app in the development mode.\
 Open [http://localhost:4003](http://localhost:4003) to view it in the browser.
