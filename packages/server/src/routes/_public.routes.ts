@@ -1,5 +1,5 @@
-import { AuthorizationPublicRoutes } from "./Authorization.Public.routes";
+import { AuthorizationPublicRoutes } from './Authorization.Public.routes';
 
 export function PublicRoutes(routes, app) {
-    routes.push(new AuthorizationPublicRoutes(app));
+	routes.push(new AuthorizationPublicRoutes(app));
 }
