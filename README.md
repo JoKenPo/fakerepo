@@ -1,6 +1,6 @@
 # FakeRepo [Em Construção]
 
-Projeto de editor a real time com boas práticas e teste de outras metodologias
+
 
 <p align="center">
 🚧 wip 🚧
