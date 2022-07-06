@@ -22,7 +22,7 @@
     "fastq": "^1.11.1",
     "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",
-    "knex": "^0.95.6",
+    "knex": "^2.1.0",
     "md5": "^2.3.0",
     "object-mapper": "^6.2.0",
     "reflect-metadata": "^0.1.13",
