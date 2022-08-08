@@ -14,7 +14,8 @@
   "scripts": {
     "server": "npm start -w @fakerepo/server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "db": "npm run db -w @fakerepo/server"
+    "db": "npm run db -w @fakerepo/server",
+    "lint": "eslint packages/server/src --ext .ts,.tsx"
   },
   "repository": {
     "type": "git",

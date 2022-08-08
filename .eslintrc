@@ -34,7 +34,13 @@
     "react/button-has-type": "off",
     "no-console": 0,
     "no-empty": 0,
-    "no-unused-vars": 1,
+    "no-unused-vars": 0,
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_"
+      }
+    ],
     "eqeqeq": 0,
     "no-plusplus": 0,
     "import/extensions": "off",
