@@ -14,7 +14,8 @@
   "scripts": {
     "server": "npm start -w @fakerepo/server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "db": "npm run db -w @fakerepo/server"
+    "db": "npm run db -w @fakerepo/server",
+    "lint": "eslint packages/server/src --ext .ts,.tsx"
   },
   "repository": {
     "type": "git",
@@ -22,16 +23,16 @@
   },
   "keywords": [],
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.30.4",
-    "@typescript-eslint/parser": "^5.30.4",
-    "eslint": "^7.32.0",
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
+    "@typescript-eslint/parser": "^5.30.5",
+    "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-import-resolver-typescript": "^3.3.0",
     "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^2.7.1"
