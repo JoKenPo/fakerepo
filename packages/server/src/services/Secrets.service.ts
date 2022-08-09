@@ -1,4 +1,4 @@
-import LocalVault from './LocalVault.Services';
+import LocalVault from './LocalVault.service';
 
 const vaultName = 'vault';
 //process.env.VAULT_CLIENT_SECRET

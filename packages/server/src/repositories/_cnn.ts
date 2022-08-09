@@ -1,5 +1,5 @@
 import knex, { Knex } from 'knex';
-import { GetSecret } from '../services/Secrets.Services';
+import { GetSecret } from '../services/Secrets.service';
 export class Connection {
 	public Qry: Knex<any, unknown[]>;
 	public Transaction: Knex.Transaction<any, any[]>;

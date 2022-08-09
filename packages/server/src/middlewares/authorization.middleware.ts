@@ -1,7 +1,7 @@
 import express from 'express';
 import md5 from 'md5';
 import { tokenVerify } from '../services/authorization.service';
-import { ExistsKey } from '../services/Secrets.Services';
+import { ExistsKey } from '../services/Secrets.service';
 
 export function BasicAuth(
 	req: express.Request,
