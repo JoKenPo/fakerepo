@@ -7,7 +7,7 @@ export default function Home() {
 			<Head>
 				<title>FAKErepo</title>
 			</Head>
-			<h1>Hello</h1>
+			<h1>FAKErepo</h1>
 		</div>
 	);
 }
