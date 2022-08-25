@@ -39,10 +39,11 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^8.0.1",
     "prettier": "^2.7.1"
   },
   "lint-staged": {
-		"*.{js,ts,tsx}": "eslint --cache --fix",
-		"*.{js,jsx,css,md,ts,tsx}": "prettier --write"
+    "*.{js,ts,tsx}": "eslint --cache --fix",
+    "*.{js,jsx,css,md,ts,tsx}": "prettier --write"
   }
 }
