@@ -1,12 +1,11 @@
 import md5 from 'md5';
-import { Connection } from '../../repositories/_cnn';
-import { ControllerBase } from '../_controller.base';
-import {
-	tokenVerify,
-	getTokenData,
-} from '../../services/authorization.service';
 import { UsuarioLoginRESTRepository } from '../../repositories/usuario/Usuario.Login.repository';
 import { UsuarioMeRESTRepository } from '../../repositories/usuario/Usuario.Me.repository';
+import { Connection } from '../../repositories/_cnn';
+import {
+	getTokenData, tokenVerify
+} from '../../services/authorization.service';
+import { ControllerBase } from '../_controller.base';
 
 // Usuario Logado /////////////////////////////////
 export interface ILoggedUser {
@@ -68,10 +67,10 @@ export class AuthorizationController extends ControllerBase {
 				return cache;
 			}
 			/*
-            Conexão via SQL
-            // const cnn = new Connection(this.dbKey);
-            // const user = await new UsuarioMeRepository(cnn).Me(this.user.id);
-            */
+				Conexão via SQL
+				// const cnn = new Connection(this.dbKey);
+				// const user = await new UsuarioMeRepository(cnn).Me(this.user.id);
+			*/
 			const user = await new UsuarioMeRESTRepository().Me(this.user.id);
 			await this.Cache.Set(
 				`${this.dbKey}${this.getName()}me${this.user.id}`,

@@ -13,9 +13,13 @@
   },
   "scripts": {
     "server": "npm start -w @fakerepo/server",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "web": "npm start -w @fakerepo/web",
     "db": "npm run db -w @fakerepo/server",
-    "lint": "eslint packages/server/src --ext .ts,.tsx"
+    "dev:server": "npm run dev -w @fakerepo/server",
+    "dev:web": "npm run dev -w @fakerepo/web",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint packages/server/src --ext .ts,.tsx",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -36,5 +40,9 @@
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^2.7.1"
+  },
+  "lint-staged": {
+		"*.{js,ts,tsx}": "eslint --cache --fix",
+		"*.{js,jsx,css,md,ts,tsx}": "prettier --write"
   }
 }
