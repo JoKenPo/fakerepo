@@ -11,5 +11,5 @@ updates:
     # to pip against the `develop` branch
     target-branch: "dev"
     # Labels on pull requests for version updates only
-    labels:
-      - "dependabot"
+#     labels:
+#       - "dependabot"
