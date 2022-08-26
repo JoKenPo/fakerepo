@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import Image from 'next/image';
+// import Image from 'next/image';
 
 export default function Home() {
 	return (
@@ -8,6 +8,7 @@ export default function Home() {
 				<title>FAKErepo</title>
 			</Head>
 			<h1>FAKErepo</h1>
+			<span>testando</span>
 		</div>
 	);
 }
