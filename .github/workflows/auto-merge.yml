@@ -3,6 +3,10 @@ name: "Dependabot Automerge - Action"
 on:
   pull_request:
 
+permissions:
+  pull-requests: write
+  issues: write
+  
 jobs:
   worker:
     runs-on: ubuntu-latest
