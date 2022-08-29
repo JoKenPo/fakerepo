@@ -21,7 +21,7 @@
     "express-session": "^1.17.2",
     "express-winston": "^4.1.0",
     "fastq": "^1.11.1",
-    "helmet": "^5.1.0",
+    "helmet": "^6.0.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^2.2.0",
     "md5": "^2.3.0",
