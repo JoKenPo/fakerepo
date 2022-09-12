@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: 'Wait for status checks'
         id: waitforstatuschecks
-        uses: WyriHaximus/github-action-wait-for-status@v1.2.0
+        uses: WyriHaximus/github-action-wait-for-status@v2
         with:
           ignoreActions: worker,WIP
           checkInterval: 60 #300
@@ -24,7 +24,7 @@ jobs:
 
       - name: 'Automerge'
         id: automerge
-        uses: pascalgn/automerge-action@v0.11.0
+        uses: pascalgn/automerge-action@v0.15.3
         if: steps.waitforstatuschecks.outputs.status == 'success'
         env:
           MERGE_LABELS: 'dependencies'
