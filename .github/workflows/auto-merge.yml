@@ -23,9 +23,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 'Automerge'
+        id: automerge
         uses: pascalgn/automerge-action@v0.11.0
         if: steps.waitforstatuschecks.outputs.status == 'success'
         env:
-          # MERGE_LABELS: 'update'
+          MERGE_LABELS: 'dependencies'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MERGE_DELETE_BRANCH: true
+          
+      - name: feedback
+        if: steps.automerge.outputs.mergeResult == "merged"
+        run: |
+          echo "Pull request ${{ steps.automerge.outputs.pullRequestNumber }} merged!"
