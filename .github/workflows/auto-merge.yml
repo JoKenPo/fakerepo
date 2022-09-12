@@ -27,6 +27,6 @@ jobs:
         uses: pascalgn/automerge-action@v0.15.3
         if: steps.waitforstatuschecks.outputs.status == 'success'
         env:
-          MERGE_LABELS: 'dependencies'
+          MERGE_LABELS: 'update'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MERGE_DELETE_BRANCH: true
