@@ -6,6 +6,7 @@ on:
 permissions: 
   pull-requests: write
   issues: write
+  contents: read
   
 jobs:
   worker:
@@ -15,7 +16,7 @@ jobs:
     steps:
       - name: 'Wait for status checks'
         id: waitforstatuschecks
-        uses: WyriHaximus/github-action-wait-for-status@v1.6.0
+        uses: WyriHaximus/github-action-wait-for-status@v2
         with:
           ignoreActions: worker,WIP
           checkInterval: 60 #300
@@ -24,10 +25,10 @@ jobs:
 
       - name: 'Automerge'
         id: automerge
-        uses: pascalgn/automerge-action@v0.15.3
+        uses: pascalgn/automerge-action@v0.15.5
         if: steps.waitforstatuschecks.outputs.status == 'success'
         env:
-          MERGE_LABELS: ''
+          MERGE_LABELS: "dependencies"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MERGE_DELETE_BRANCH: true
           
