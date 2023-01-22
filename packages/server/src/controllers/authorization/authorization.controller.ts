@@ -3,7 +3,8 @@ import { UsuarioLoginRESTRepository } from '../../repositories/usuario/Usuario.L
 import { UsuarioMeRESTRepository } from '../../repositories/usuario/Usuario.Me.repository';
 import { Connection } from '../../repositories/_cnn';
 import {
-	getTokenData, tokenVerify
+	getTokenData,
+	tokenVerify,
 } from '../../services/authorization.service';
 import { ControllerBase } from '../_controller.base';
 
