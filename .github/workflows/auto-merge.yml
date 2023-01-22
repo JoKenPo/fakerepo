@@ -6,6 +6,8 @@ on:
 permissions:
   pull-requests: write
   issues: write
+  statuses: read
+  actions: write
 
 jobs:
   worker:
@@ -28,7 +30,6 @@ jobs:
         if: steps.waitforstatuschecks.outputs.status == 'success'
         env:
           MERGE_LABELS: "dependencies"
-          UPDATE_LABELS: "dependecies"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MERGE_DELETE_BRANCH: true
           
