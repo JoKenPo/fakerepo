@@ -2,7 +2,21 @@ name: 'Dependabot Automerge - Action'
 
 on:
   pull_request:
-	pull_request_target:
+    types:
+      - labeled
+      - unlabeled
+      - synchronize
+      - opened
+      - edited
+      - ready_for_review
+      - reopened
+      - unlocked
+  pull_request_review:
+    types:
+      - submitted
+  check_suite:
+    types:
+      - completed
 
 permissions:
   pull-requests: write
@@ -30,7 +44,7 @@ jobs:
         uses: pascalgn/automerge-action@v0.15.5
         if: steps.waitforstatuschecks.outputs.status == 'success'
         env:
-          MERGE_LABELS: "dependencies"
+          MERGE_LABELS: 'dependencies'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MERGE_DELETE_BRANCH: true
 
