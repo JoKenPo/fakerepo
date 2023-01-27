@@ -19,7 +19,10 @@ import {
 } from './middlewares/authorization.middleware';
 
 import { IOServer } from './services/Socket.Service';
-import { ILoggedUser } from './controllers/authorization/authorization.controller';
+import {
+	ILoggedUser,
+	IPrismaLoggedUser,
+} from './controllers/authorization/authorization.controller';
 import { PublicRoutes } from './routes/_public.routes';
 import { PrivateRoutes } from './routes/_private.routes';
 import { RoutesBase } from './routes/_base.routes';
@@ -28,7 +31,7 @@ declare global {
 	// eslint-disable-next-line @typescript-eslint/no-namespace
 	namespace Express {
 		interface Request {
-			_LoggedUser: ILoggedUser;
+			_LoggedUser: IPrismaLoggedUser; //ILoggedUser;
 			_key: string;
 		}
 	}

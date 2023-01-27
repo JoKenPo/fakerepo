@@ -2,7 +2,10 @@ import * as SocketIO from 'socket.io';
 import fastq, { queueAsPromised } from 'fastq';
 import { tokenVerify } from './authorization.service';
 import { SetKey } from '../middlewares/authorization.middleware';
-import { ILoggedUser } from '../controllers/authorization/authorization.controller';
+import {
+	ILoggedUser,
+	IPrismaLoggedUser,
+} from '../controllers/authorization/authorization.controller';
 
 const CONCURRENCY = 1;
 
@@ -194,15 +197,15 @@ async function IOSendToRoomWorker(data: IIOSendToRoom) {
 	});
 }
 
-const validateToken = (token: string, key: string): ILoggedUser => {
+const validateToken = (token: string, key: string): IPrismaLoggedUser => {
 	try {
 		if (token && token.startsWith('Bearer ')) {
 			const result: any = tokenVerify(token.split(' ')[1], key);
 			if (result.data.type === 1) {
 				return {
 					id: result.data.id,
-					// id_cliente: result.data.id_cliente,
-					// id_permissao: result.data.level,
+					id_cliente: result.data.cliente.id,
+					id_permissao: result.data.level,
 				};
 			}
 		}
@@ -228,14 +231,27 @@ export const IOSendToRoom = (
 ) => qIOSendToRoom.push({ key, roomId, event, data });
 
 export const IOServer = (io: SocketIO.Server) => {
-	// io.use((socket, next) => {
-	//     console.log(socket.handshake.headers);
-	//     next()
-	//     if (!socket.handshake.headers.key && process.env.NODE_ENV && process.env.NODE_ENV.toLowerCase() === 'development') socket.handshake.headers.key = 'dev'
-	//     if (!socket.handshake.headers.key || !socket.handshake.auth.user || !socket.handshake.auth.token) return;
-	//     const user = validateToken('Bearer ' + String(socket.handshake.auth.token), String(socket.handshake.headers.key))
-	//     if (user && socket.handshake.auth.user.id === user.id) next();
-	// });
+	io.use((socket, next) => {
+		console.log(socket.handshake.headers);
+		next();
+		if (
+			!socket.handshake.headers.key &&
+			process.env.NODE_ENV &&
+			process.env.NODE_ENV.toLowerCase() === 'development'
+		)
+			socket.handshake.headers.key = 'dev';
+		if (
+			!socket.handshake.headers.key ||
+			!socket.handshake.auth.user ||
+			!socket.handshake.auth.token
+		)
+			return;
+		const user = validateToken(
+			'Bearer ' + String(socket.handshake.auth.token),
+			String(socket.handshake.headers.key),
+		);
+		if (user && socket.handshake.auth.user.id === user.id) next();
+	});
 
 	io.on('connection', socket => {
 		if (

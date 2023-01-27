@@ -1,6 +1,12 @@
 import md5 from 'md5';
-import { UsuarioLoginRESTRepository } from '../../repositories/usuario/Usuario.Login.repository';
-import { UsuarioMeRESTRepository } from '../../repositories/usuario/Usuario.Me.repository';
+import {
+	UsuarioLoginPrismaRepository,
+	UsuarioLoginRESTRepository,
+} from '../../repositories/usuario/Usuario.Login.repository';
+import {
+	UsuarioMePrismaRepository,
+	UsuarioMeRESTRepository,
+} from '../../repositories/usuario/Usuario.Me.repository';
 import { Connection } from '../../repositories/_cnn';
 import {
 	getTokenData,
@@ -14,7 +20,11 @@ export interface ILoggedUser {
 	// id_cliente: number
 	// id_permissao: number,
 }
-
+export interface IPrismaLoggedUser {
+	id: string;
+	id_cliente: string;
+	id_permissao: string;
+}
 // LOGIN //////////////////////////////////////////
 // export interface ILoginResult {
 //     id: number,
@@ -36,7 +46,7 @@ export interface ILoggedUser {
 ////////////////////////////////////////////////
 
 export class AuthorizationController extends ControllerBase {
-	constructor(dbKey: string, user: ILoggedUser) {
+	constructor(dbKey: string, user: IPrismaLoggedUser) {
 		super('AuthorizationController', dbKey, user);
 	}
 
@@ -44,11 +54,18 @@ export class AuthorizationController extends ControllerBase {
 		try {
 			const hash = md5(password);
 			/*
-				Conexão via SQL
-				// const cnn = new Connection(this.dbKey);
-				// const user = await new UsuarioLoginRepository(cnn).Login(email, hash);
+				// Conexão via SQL
+				const cnn = new Connection(this.dbKey);
+				const user = await new UsuarioLoginRepository(cnn).Login(email, hash);
 			*/
-			const user = await new UsuarioLoginRESTRepository().Login(email, hash);
+
+			/*
+				// Conexão via JSON API
+				const user = await new UsuarioLoginRESTRepository().Login(email, hash);
+			*/
+
+			// Conexão via Prisma
+			const user = await new UsuarioLoginPrismaRepository().Login(email, hash);
 			if (user) return { user, auth: getTokenData(user.id, this.dbKey, true) };
 		} catch {
 			console.log('ERROR: Login Error');
@@ -58,7 +75,7 @@ export class AuthorizationController extends ControllerBase {
 
 	async Me() {
 		try {
-			const cache = await this.Cache.Get(
+			const cache = await this.Cache?.Get(
 				`${this.dbKey}${this.getName()}me${this.user.id}`,
 			);
 			if (cache) {
@@ -74,14 +91,24 @@ export class AuthorizationController extends ControllerBase {
 				// const cnn = new Connection(this.dbKey);
 				// const user = await new UsuarioMeRepository(cnn).Me(this.user.id);
 			*/
-			const user = await new UsuarioMeRESTRepository().Me(this.user.id);
-			await this.Cache.Set(
+
+			// Conexão via JSON API
+			// const user = await new UsuarioMeRESTRepository().Me(this.user.id);
+
+			//Conexão via PRISMA
+			const user = await new UsuarioMePrismaRepository().Me(
+				String(this.user.id),
+			);
+
+			await this.Cache?.Set(
 				`${this.dbKey}${this.getName()}me${this.user.id}`,
 				user,
 				120,
 			);
 			return user;
-		} catch {}
+		} catch (err) {
+			console.log(err);
+		}
 		throw new Error('Access Denied');
 	}
 

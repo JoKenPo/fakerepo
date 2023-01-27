@@ -3,11 +3,16 @@ import { RepositoryBase } from '../_repository.base';
 import { Connection } from '../_cnn';
 import {
 	LoginResultMapper,
+	LoginResultPrismaMapper,
 	usuarioPermissao,
 } from './Usuario.Login.repository';
 import { api } from '../../services/axios.service';
 // import { LoginResultMapper, usuarioPermissao } from '../constants/usuarios.constats';
 
+// Prisma Libs
+import { z } from 'zod';
+import { prisma } from '../../services/prisma.service';
+import { IPrismaLoggedUser } from '../../controllers/authorization/authorization.controller';
 export class UsuarioMeRepository extends RepositoryBase {
 	constructor(connection: Connection) {
 		super(connection);
@@ -63,6 +68,32 @@ export class UsuarioMeRESTRepository {
 					return result; // as ILoginResult;
 				}
 			});
+			return result;
+		} catch {}
+	}
+}
+
+export class UsuarioMePrismaRepository {
+	async Me(id: string): Promise<any> {
+		try {
+			let result = {};
+
+			const user = await prisma.usuarios.findUnique({
+				where: {
+					id: id,
+				},
+			});
+
+			if (user) {
+				result = mapper.merge(
+					{
+						...user,
+						permissao: usuarioPermissao(user.id_permissao),
+					},
+					LoginResultPrismaMapper,
+				);
+				return result; //as IPrismaLoggedUser;
+			}
 			return result;
 		} catch {}
 	}

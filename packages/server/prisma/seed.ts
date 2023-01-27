@@ -41,7 +41,7 @@ async function run() {
 				id: userId,
 				nome: 'Eduardo Almeida',
 				email: 'eduardo.almeida.job@gmail.com',
-				password: 'ae5515e371a599b8d82b244212209283',
+				password: '81dc9bdb52d04dc20036dbd8313ed055',
 				departamento: 'Desenvolvimento',
 				url_foto: 'https://avatars.githubusercontent.com/u/3427820?v=4',
 				id_permissao: permissionId,

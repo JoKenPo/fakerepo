@@ -77,8 +77,8 @@ export function AuthorizationMiddleware(app) {
 					if (result.data.type === 1) {
 						req._LoggedUser = {
 							id: result.data.id,
-							// id_cliente: result.data.id_cliente,
-							// id_permissao: result.data.level,
+							id_cliente: result.data.id_cliente,
+							id_permissao: result.data.level,
 						};
 						return next();
 					}

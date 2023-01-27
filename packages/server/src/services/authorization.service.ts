@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import CipherService, { EHashAlgorithm } from './Cipher.service';
 import md5 from 'md5';
 
-const salt: string = 'k#4!L$fgVj'.substring(0, 10);
+const salt: string = (process.env.CIPHER_SALT || 'k#4!L$fgVj').substring(0, 10);
 const jwt_pwd: string = (process.env.JWT_SECRET || '$F5u@y7*!a').substring(
 	0,
 	10,

@@ -5,6 +5,10 @@ import { api } from '../../services/axios.service';
 // import { ILoginResult } from '../../controllers/authorization/authorization.controller';
 // import { LoginResultMapper, usuarioPermissao } from '../constants/usuarios.constats';
 
+// Prisma Libs
+import { z } from 'zod';
+import { prisma } from '../../services/prisma.service';
+
 export const LoginResultMapper = {
 	id_usuario: 'id',
 	nome: 'nome',
@@ -16,15 +20,26 @@ export const LoginResultMapper = {
 	cliente_nome: 'cliente.nome',
 };
 
-export const usuarioPermissao = (value: number): string => {
+export const LoginResultPrismaMapper = {
+	id: 'id',
+	nome: 'nome',
+	departamento: 'departamento',
+	id_permissao: 'id_permissao',
+	permissao: 'acesso',
+	url_foto: 'url_foto',
+	id_cliente: 'cliente.id',
+	// cliente_nome: 'cliente.nome',
+};
+
+export const usuarioPermissao = (value: string): string => {
 	switch (value) {
-		case 1:
+		case '0730ffac-d039-4194-9571-01aa2aa0efbd':
 			return 'Master';
-		case 2:
+		case '2':
 			return 'Normal';
-		case 3:
+		case '3':
 			return 'Read-Only';
-		case 4:
+		case '4':
 			return 'Esforço Colaborativo';
 	}
 };
@@ -83,6 +98,34 @@ export class UsuarioLoginRESTRepository {
 					}
 				}
 			});
+			return result;
+		} catch {}
+	}
+}
+
+export class UsuarioLoginPrismaRepository {
+	async Login(email: string, password: string): Promise<any> {
+		try {
+			let result = {};
+
+			const user = await prisma.usuarios.findUnique({
+				where: {
+					email: email,
+				},
+			});
+
+			if (user) {
+				if (user.password === password) {
+					result = mapper.merge(
+						{
+							...user,
+							permissao: usuarioPermissao(user.id_permissao),
+						},
+						LoginResultPrismaMapper,
+					);
+				}
+			}
+
 			return result;
 		} catch {}
 	}
