@@ -1,13 +1,7 @@
 import md5 from 'md5';
-import {
-	UsuarioLoginPrismaRepository,
-	UsuarioLoginRESTRepository,
-} from '../../repositories/usuario/Usuario.Login.repository';
-import {
-	UsuarioMePrismaRepository,
-	UsuarioMeRESTRepository,
-} from '../../repositories/usuario/Usuario.Me.repository';
-import { Connection } from '../../repositories/_cnn';
+import { UsuarioLoginPrismaRepository } from '../../repositories/usuario/Usuario.Login.repository';
+import { UsuarioMePrismaRepository } from '../../repositories/usuario/Usuario.Me.repository';
+// import { Connection } from '../../repositories/_cnn';
 import {
 	getTokenData,
 	tokenVerify,
@@ -57,11 +51,6 @@ export class AuthorizationController extends ControllerBase {
 				// Conexão via SQL
 				const cnn = new Connection(this.dbKey);
 				const user = await new UsuarioLoginRepository(cnn).Login(email, hash);
-			*/
-
-			/*
-				// Conexão via JSON API
-				const user = await new UsuarioLoginRESTRepository().Login(email, hash);
 			*/
 
 			// Conexão via Prisma
