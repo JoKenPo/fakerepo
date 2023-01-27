@@ -1,19 +1,22 @@
 // import { DataCache } from "../services/redis.service";
-import { ILoggedUser } from './authorization/authorization.controller';
+import {
+	ILoggedUser,
+	IPrismaLoggedUser,
+} from './authorization/authorization.controller';
 
 interface IConfig {
 	cache: any;
 }
 export class ControllerBase {
 	private _name: string;
-	protected user: ILoggedUser;
+	protected user: IPrismaLoggedUser;
 	protected dbKey: string;
 	protected Cache;
 
 	constructor(
 		name: string,
 		dbKey: string,
-		user: ILoggedUser,
+		user: IPrismaLoggedUser,
 		config?: IConfig,
 	) {
 		this._name = name;

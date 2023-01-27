@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// generator erd {
+//   provider = "prisma-erd-generator"
+// }
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Permissoes {
+  id       String     @id @default(uuid())
+  role     String
+  Usuarios Usuarios[]
+
+  @@map("permissoes")
+}
+
+model Clientes {
+  id       String     @id @default(uuid())
+  nome     String
+  Usuarios Usuarios[]
+
+  @@map("clientes")
+}
+
+model Usuarios {
+  id           String     @id @default(uuid())
+  nome         String
+  email        String     @unique
+  password     String
+  departamento String
+  permissao    Permissoes @relation(fields: [id_permissao], references: [id])
+  id_permissao String
+  url_foto     String
+  cliente      Clientes   @relation(fields: [id_cliente], references: [id])
+  id_cliente   String
+
+  @@map("usuarios")
+}
