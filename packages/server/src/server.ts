@@ -150,7 +150,7 @@ export default class Server {
 			// this.routes.forEach((route: RoutesBase) => {
 			//   this.debugLog(`Routes configured for ${route.getName()}`);
 			// });
-			console.log(`Server running at http://localhost:${port}`);
+			console.log(`Server running at http://localhost:${port} 🚀`);
 		});
 	}
 }

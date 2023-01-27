@@ -4,7 +4,7 @@ export default class LocalVault {
 	async LoadSecrets(filename: string) {
 		return new Promise<Array<any>>(resolve => {
 			let secrets = [];
-			console.log('LOCAL VAULT SERVICE START ...');
+			console.log('LOCAL VAULT SERVICE START ... 🔐');
 			try {
 				if (fs.existsSync(filename)) {
 					const secretFile = fs.readFileSync(process.env.SECRET_FILE);
