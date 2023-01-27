@@ -3,9 +3,9 @@ node_modules
 /build
 dist
 /dist
-/secret
-/secrets
-secrets.json
+# /secret
+# /secrets
+# secrets.json
 
 .DS_Store
 
