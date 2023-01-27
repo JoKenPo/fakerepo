@@ -15,7 +15,6 @@ export class AuthorizationPublicRoutes extends RoutesBase {
 					.Login(req.body ? req.body : '')
 					.then(result => res.status(200).json(result))
 					.catch(error => {
-						console.log('testando: ');
 						res.status(400).json(error);
 					}),
 			);

@@ -43,14 +43,17 @@ export class AuthorizationController extends ControllerBase {
 	async Login({ email, password }: { email: string; password: string }) {
 		try {
 			const hash = md5(password);
+			console.log('hash: ', hash);
 			/*
-            Conexão via SQL
-            // const cnn = new Connection(this.dbKey);
-            // const user = await new UsuarioLoginRepository(cnn).Login(email, hash);
-            */
+				Conexão via SQL
+				// const cnn = new Connection(this.dbKey);
+				// const user = await new UsuarioLoginRepository(cnn).Login(email, hash);
+			*/
 			const user = await new UsuarioLoginRESTRepository().Login(email, hash);
 			if (user) return { user, auth: getTokenData(user.id, this.dbKey, true) };
-		} catch {}
+		} catch {
+			console.log('ERROR: Login Error');
+		}
 		throw new Error('Access Denied');
 	}
 
