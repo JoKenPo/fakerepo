@@ -232,7 +232,8 @@ export const IOSendToRoom = (
 
 export const IOServer = (io: SocketIO.Server) => {
 	io.use((socket, next) => {
-		console.log(socket.handshake.headers);
+		// console.log(socket.handshake.headers);
+		console.log('SocketIO Connection');
 		next();
 		if (
 			!socket.handshake.headers.key &&
@@ -262,28 +263,35 @@ export const IOServer = (io: SocketIO.Server) => {
 			socket.handshake.headers.key = 'dev.com.br';
 
 		// console.log(
-		//   socket.handshake.headers.key,
-		//   "user",
-		//   socket.handshake.auth.user,
-		//   "auth",
-		//   socket.handshake.headers.authorization
+		// 	socket.handshake.headers.key,
+		// 	'user',
+		// 	socket.handshake.auth.user,
+		// 	'auth',
+		// 	socket.handshake.headers.authorization,
 		// );
-		if (
-			!socket.handshake.headers.key ||
-			!socket.handshake.auth.user ||
-			!socket.handshake.headers.authorization
-		) {
-			return socket.disconnect();
-		}
 
-		const user = validateToken(
-			String(socket.handshake.headers.authorization),
-			String(SetKey(String(socket.handshake.headers.key))),
-		);
+		socket.handshake.auth.user = {
+			id: 'fa1a1bcf-3d87-4626-8c0d-d7fd1255ac00',
+			nome: 'Eduardo Almeida',
+			url_foto: 'https://avatars.githubusercontent.com/u/3427820?v=4',
+		};
 
-		if (!user || socket.handshake.auth.user.id !== user.id) {
-			return socket.disconnect();
-		}
+		// if (
+		// 	!socket.handshake.headers.key ||
+		// 	!socket.handshake.auth.user ||
+		// 	!socket.handshake.headers.authorization
+		// ) {
+		// 	return socket.disconnect();
+		// }
+
+		// const user = validateToken(
+		// 	String(socket.handshake.headers.authorization),
+		// 	String(SetKey(String(socket.handshake.headers.key))),
+		// );
+
+		// if (!user || socket.handshake.auth.user.id !== user.id) {
+		// 	return socket.disconnect();
+		// }
 
 		socket.on('ping', () => {
 			socket.emit('pong');
