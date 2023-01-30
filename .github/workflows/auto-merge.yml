@@ -3,7 +3,7 @@ name: 'Dependabot Automerge - Action'
 on:
   pull_request_target:
     branches:
-      - main
+      - dev
 
 permissions:
   pull-requests: write
@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: 'Automerge'
         id: automerge
-      - uses: ahmadnassri/action-dependabot-auto-merge@v2.4
+        uses: ahmadnassri/action-dependabot-auto-merge@v2.4
         with:
           github-token: ${{ secrets.AUTO_MERGE }}
           command: 'squash and merge'
