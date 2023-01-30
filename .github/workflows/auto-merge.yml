@@ -1,22 +1,9 @@
 name: 'Dependabot Automerge - Action'
 
 on:
-  pull_request:
-    types:
-      - labeled
-      - unlabeled
-      - synchronize
-      - opened
-      - edited
-      - ready_for_review
-      - reopened
-      - unlocked
-  pull_request_review:
-    types:
-      - submitted
-  check_suite:
-    types:
-      - completed
+  pull_request_target:
+    branches:
+      - dev
 
 permissions:
   pull-requests: write
@@ -30,25 +17,21 @@ jobs:
 
     if: github.actor == 'dependabot[bot]'
     steps:
-      - name: 'Wait for status checks'
-        id: waitforstatuschecks
-        uses: WyriHaximus/github-action-wait-for-status@v1.7.1
-        with:
-          ignoreActions: worker,WIP
-          checkInterval: 60 #300
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: 'Automerge'
         id: automerge
-        uses: pascalgn/automerge-action@v0.15.5
-        if: steps.waitforstatuschecks.outputs.status == 'success'
-        env:
-          MERGE_LABELS: 'dependencies'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MERGE_DELETE_BRANCH: true
+        uses: ahmadnassri/action-dependabot-auto-merge@v2.4
+        with:
+          github-token: ${{ secrets.AUTO_MERGE }}
+          command: 'squash and merge'
+          target: minor
 
-      - name: feedback
+      - name: 'Feedback'
         if: steps.automerge.outputs.mergeResult == 'merged'
         run: |
           echo "Pull request ${{ steps.automerge.outputs.pullRequestNumber }} merged!"
+
+      - name: 'Error check'
+        if: steps.automerge.outputs.mergeResult !== 'merged'
+        run: |
+          echo "Pull request ${{ steps.automerge.outputs.pullRequestNumber }} don't merged!"
+          exit 1
