@@ -1,61 +1,18 @@
 import dynamic from 'next/dynamic';
-// import Quill from 'quill';
 import QuillCursors from 'quill-cursors';
+import { useQuill } from 'react-quilljs';
 import styles from './editor.module.scss';
 
-import 'react-quill/dist/quill.snow.css';
+import 'quill/dist/quill.snow.css';
+import { useState } from 'react';
 
 interface IEditorProps {
 	id: string;
-	value: string;
-}
-
-function formatRange(range) {
-	return range ? [range.index, range.index + range.length].join(',') : 'none';
-}
-
-function onEditorChange(value, delta, source, editor) {
-	this.setState({
-		value: editor.getContents(),
-		events: [`[${source}] text-change`, ...this.state.events],
-	});
-}
-
-function onEditorChangeSelection(range, source) {
-	this.setState({
-		selection: range,
-		events: [
-			`[${source}] selection-change(${this.formatRange(
-				this.state.selection,
-			)} -> ${this.formatRange(range)})`,
-			...this.state.events,
-		],
-	});
-}
-
-function onEditorFocus(range, source) {
-	this.setState({
-		events: [`[${source}] focus(${this.formatRange(range)})`].concat(
-			this.state.events,
-		),
-	});
-}
-
-function onEditorBlur(previousRange, source) {
-	this.setState({
-		events: [`[${source}] blur(${this.formatRange(previousRange)})`].concat(
-			this.state.events,
-		),
-	});
+	value?: string;
 }
 
 export default function Header(props: IEditorProps) {
 	const docId = props.id;
-
-	//eslint-disable-next-line
-	// const Quill = dynamic(import('quill'), { ssr: false });
-	const ReactQuill = dynamic(import('react-quill'), { ssr: false });
-
 	const toolbar = [
 		[{ size: [] }],
 		['bold', 'italic', 'underline', 'strike'],
@@ -73,23 +30,51 @@ export default function Header(props: IEditorProps) {
 		['clean'],
 	];
 
+	const theme = 'snow';
+
+	const modules = {
+		// cursor: true,
+		toolbar,
+	};
+
+	const [editorValue, setEditorValue] = useState(props.value || '');
+
+	const { quill, Quill, quillRef } = useQuill();
+	// const { quillRef } = useQuill({ theme, modules });
+
+	if (Quill && !quill) {
+		// For execute this line only once.
+		// Quill.register('modules/cursors', QuillCursors);
+	}
+
+	if (quill) {
+		quill.on('text-change', (delta, oldDelta, source) => {
+			// console.log('Text change!');
+			// console.log(quill.getText()); // Get text only
+			// console.log(quill.getContents()); // Get delta contents
+			// console.log(quill.root.innerHTML); // Get innerHTML using quill
+			// console.log(quillRef.current.firstChild.innerHTML); // Get innerHTML using quillRef
+			setEditorValue(quill.getText());
+		});
+	}
+
 	// Quill.register('modules/cursors', QuillCursors);
 
 	// const editor = new Quill(`#${props.id}`, {
 	// 	modules: {
 	// 		toolbar: toolbar,
 	// 		theme: 'snow',
-	// 		// modules: {
-	// 		// 	cursors: true,
-	// 		// },
+	// modules: {
+	// 	cursors: true,
+	// },
 	// 	},
 	// });
 
 	return (
 		<div className={styles.editor}>
 			<div id={'toolbar'}></div>
-			{/* <div id={props.id}></div> */}
-			<ReactQuill theme="snow" className={styles.quill} />
+			<p>{editorValue}</p>
+			<div id={props.id} ref={quillRef}></div>
 		</div>
 	);
 }
