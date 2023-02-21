@@ -2,7 +2,7 @@ import Head from 'next/head';
 // import Image from 'next/image';
 import Header from '../components/Header/Header';
 import styles from '../styles/Home.module.scss';
-import TextEditor from '../components/TextEditor/TextEditor';
+import Editor from '../components/Editor/Editor';
 
 export default function Home() {
 	return (
@@ -15,7 +15,7 @@ export default function Home() {
 			</Head>
 			<main className={styles.main}>
 				<Header />
-				<TextEditor />
+				<Editor id={'teste'} value={''} />
 			</main>
 		</>
 	);
