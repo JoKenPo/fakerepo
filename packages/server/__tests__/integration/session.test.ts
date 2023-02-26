@@ -41,8 +41,6 @@ describe('Authentication', () => {
 			.get('/me')
 			.set({ ...header, Authorization: `Bearer ${token as string}` });
 
-		console.log(response.body);
-
 		expect(response.status).toBe(200);
 	});
 
