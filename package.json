@@ -1,53 +1,55 @@
 {
-  "name": "fakerepo",
-  "version": "0.0.1",
-  "description": "A real time wysiwyg editor with Socket.io and Quill.js",
-  "main": "index.js",
-  "author": "Eduardo Almeida",
-  "private": true,
-  "license": "MIT",
+	"name": "fakerepo",
+	"version": "0.0.1",
+	"description": "A real time wysiwyg editor with Socket.io and Quill.js",
+	"main": "index.js",
+	"author": "Eduardo Almeida",
+	"private": true,
+	"license": "MIT",
 	"type": "module",
-  "workspaces": {
-    "packages": [
-      "packages/*"
-    ]
-  },
-  "scripts": {
-    "server": "npm start -w @fakerepo/server",
-    "web": "npm start -w @fakerepo/web",
+	"workspaces": {
+		"packages": [
+			"packages/*"
+		]
+	},
+	"scripts": {
+		"server": "npm start -w @fakerepo/server",
+		"web": "npm start -w @fakerepo/web",
 		"build": "next build -w @fakerepo/web",
-    "dev:server": "npm run dev -w @fakerepo/server",
-    "dev:web": "npm run dev -w @fakerepo/web",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint packages/server/src --ext .ts,.tsx",
-    "prepare": "husky install"
-  },
-  "repository": {
-    "type": "git",
-    "url": "fakerepo"
-  },
-  "keywords": [],
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.30.7",
-    "@typescript-eslint/parser": "^5.35.1",
-    "eslint": "^8.19.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-import-resolver-typescript": "^3.3.0",
-    "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-jsx-a11y": "^6.6.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-promise": "^6.0.0",
-    "eslint-plugin-react": "^7.26.1",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "husky": "^8.0.1",
-    "prettier": "^2.7.1"
-  },
-  "lint-staged": {
-    "*.{js,ts,tsx}": "eslint --cache --fix",
-    "*.{js,jsx,css,md,ts,tsx}": "prettier --write"
-  },
-  "dependencies": {
-    "socket.io-client": "^4.5.4"
-  }
+		"dev:server": "npm run dev -w @fakerepo/server",
+		"dev:web": "npm run dev -w @fakerepo/web",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"lint": "eslint packages/server/src --ext .ts,.tsx",
+		"prepare": "husky install"
+	},
+	"repository": {
+		"type": "git",
+		"url": "fakerepo"
+	},
+	"keywords": [],
+	"devDependencies": {
+		"@types/babel__core": "^7.20.1",
+		"@typescript-eslint/eslint-plugin": "^5.30.7",
+		"@typescript-eslint/parser": "^5.35.1",
+		"eslint": "^8.19.0",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-import-resolver-typescript": "^3.3.0",
+		"eslint-plugin-import": "^2.25.4",
+		"eslint-plugin-jsx-a11y": "^6.6.1",
+		"eslint-plugin-node": "^11.1.0",
+		"eslint-plugin-promise": "^6.0.0",
+		"eslint-plugin-react": "^7.26.1",
+		"eslint-plugin-react-hooks": "^4.2.0",
+		"husky": "^8.0.1",
+		"prettier": "^3.0.1",
+		"prisma": "^5.1.1"
+	},
+	"lint-staged": {
+		"*.{js,ts,tsx}": "eslint --cache --fix",
+		"*.{js,jsx,css,md,ts,tsx}": "prettier --write"
+	},
+	"dependencies": {
+		"@prisma/client": "^5.1.1",
+		"socket.io-client": "^4.5.4"
+	}
 }
