@@ -56,8 +56,8 @@ export class AuthorizationController extends ControllerBase {
 			// Conexão via Prisma
 			const user = await new UsuarioLoginPrismaRepository().Login(email, hash);
 			if (user) return { user, auth: getTokenData(user.id, this.dbKey, true) };
-		} catch {
-			console.log('ERROR: Login Error');
+		} catch (error) {
+			throw new Error(error);
 		}
 		throw new Error('Access Denied');
 	}

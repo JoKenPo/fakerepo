@@ -17,6 +17,7 @@ const start = async () => {
 
 export function ExistsKey(key: string): boolean {
 	try {
+		if (process.env.NODE_ENV == 'test') return true;
 		return !!secrets.find(
 			element => element.key.trim().toLowerCase() == key.trim().toLowerCase(),
 		);

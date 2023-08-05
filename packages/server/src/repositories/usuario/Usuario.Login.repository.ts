@@ -43,6 +43,7 @@ export const usuarioPermissao = (value: string): string => {
 	}
 };
 
+// SQL Class
 export class UsuarioLoginRepository extends RepositoryBase {
 	constructor(connection: Connection) {
 		super(connection);
@@ -78,6 +79,7 @@ export class UsuarioLoginRepository extends RepositoryBase {
 	}
 }
 
+// Prisma Class
 export class UsuarioLoginPrismaRepository {
 	async Login(email: string, password: string): Promise<any> {
 		try {
@@ -98,10 +100,11 @@ export class UsuarioLoginPrismaRepository {
 						},
 						LoginResultPrismaMapper,
 					);
+
+					return result;
 				}
 			}
-
-			return result;
 		} catch {}
+		throw new Error('User not found');
 	}
 }

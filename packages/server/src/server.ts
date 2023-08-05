@@ -88,7 +88,7 @@ class HttpException extends Error {
 
 if (!process.env.DEBUG) loggerOptions.meta = false;
 export default class Server {
-	private app: express.Application;
+	public app: express.Application;
 	private server: http.Server;
 	private routes: Array<RoutesBase> = [];
 	private debugLog: debug.IDebugger;
