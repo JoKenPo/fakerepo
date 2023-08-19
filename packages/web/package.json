@@ -25,8 +25,8 @@
     "@types/node": "^20.1.1",
     "@types/quill": "^2.0.10",
     "@types/react": "^18.0.17",
-    "eslint": "8.46.0",
-    "eslint-config-next": "13.4.12",
+    "eslint": "8.47.0",
+    "eslint-config-next": "13.4.19",
     "typescript": "^5.0.3"
   }
 }
