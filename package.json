@@ -15,7 +15,7 @@
 	"scripts": {
 		"server": "npm start -w @fakerepo/server",
 		"web": "npm start -w @fakerepo/web",
-		"build": "next build -w @fakerepo/web",
+		"build": "npm run build -w @fakerepo/web",
 		"dev:server": "npm run dev -w @fakerepo/server",
 		"dev:web": "npm run dev -w @fakerepo/web",
 		"test": "echo \"Error: no test specified\" && exit 1",
