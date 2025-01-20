@@ -1,10 +1,49 @@
+// src/pages/index.tsx
+'use client';
 import Head from 'next/head';
-// import Image from 'next/image';
-import Header from '../components/Header/Header';
 import styles from '../styles/Home.module.scss';
-import Editor from '../components/Editor/Editor';
+import { useSession, signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { Github, Mail } from 'lucide-react';
 
 export default function Home() {
+	const { data: session, status } = useSession();
+	const router = useRouter();
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState('');
+
+	if (status === 'authenticated') {
+		router.push('/editor');
+		return null;
+	}
+
+	const handleEmailLogin = async (e: React.FormEvent) => {
+		e.preventDefault();
+		setIsLoading(true);
+		setError('');
+
+		try {
+			const result = await signIn('credentials', {
+				email,
+				password,
+				redirect: false,
+			});
+
+			if (result?.error) {
+				setError('Email ou senha inválidos');
+			} else {
+				router.push('/editor');
+			}
+		} catch (error) {
+			setError('Ocorreu um erro ao fazer login');
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
 	return (
 		<>
 			<Head>
@@ -14,8 +53,91 @@ export default function Home() {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<main className={styles.main}>
-				<Header />
-				<Editor id={'teste'} value={''} />
+				{status === 'loading' ? (
+					<div className="min-h-screen flex items-center justify-center">
+						<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+					</div>
+				) : (
+					<div className="min-h-screen flex items-center justify-center bg-gray-100">
+						<div className="max-w-md w-full px-6">
+							<div className="text-center mb-8">
+								<h1 className="text-3xl font-bold">SmartSheet Clone</h1>
+								<p className="text-gray-600 mt-2">
+									Entre para colaborar em tempo real
+								</p>
+							</div>
+
+							<div className="bg-white p-8 rounded-lg shadow-md space-y-6">
+								<form onSubmit={handleEmailLogin} className="space-y-4">
+									<div>
+										<label className="block text-sm font-medium text-gray-700">
+											Email
+										</label>
+										<input
+											type="email"
+											value={email}
+											onChange={e => setEmail(e.target.value)}
+											className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
+											required
+										/>
+									</div>
+
+									<div>
+										<label className="block text-sm font-medium text-gray-700">
+											Senha
+										</label>
+										<input
+											type="password"
+											value={password}
+											onChange={e => setPassword(e.target.value)}
+											className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
+											required
+										/>
+									</div>
+
+									{error && <div className="text-red-500 text-sm">{error}</div>}
+
+									<button
+										type="submit"
+										disabled={isLoading}
+										className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50"
+									>
+										{isLoading ? 'Entrando...' : 'Entrar com Email'}
+									</button>
+								</form>
+
+								<div className="relative">
+									<div className="absolute inset-0 flex items-center">
+										<div className="w-full border-t border-gray-300" />
+									</div>
+									<div className="relative flex justify-center text-sm">
+										<span className="bg-white px-2 text-gray-500">
+											Ou continue com
+										</span>
+									</div>
+								</div>
+
+								<div className="grid grid-cols-2 gap-3">
+									<button
+										onClick={() => signIn('github', { callbackUrl: '/editor' })}
+										className="flex items-center justify-center gap-2 bg-gray-900 text-white py-2 px-4 rounded-md hover:bg-gray-800"
+									>
+										<Github className="h-5 w-5" />
+										GitHub
+									</button>
+
+									<button
+										onClick={() => signIn('google', { callbackUrl: '/editor' })}
+										className="flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-50"
+									>
+										<Mail className="h-5 w-5" />
+										Google
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				)}
 			</main>
 		</>
 	);

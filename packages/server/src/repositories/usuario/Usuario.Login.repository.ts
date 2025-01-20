@@ -104,7 +104,8 @@ export class UsuarioLoginPrismaRepository {
 					return result;
 				}
 			}
-		} catch {}
-		throw new Error('User not found');
+		} catch {
+			throw new Error('User not found');
+		}
 	}
 }

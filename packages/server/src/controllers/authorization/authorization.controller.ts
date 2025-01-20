@@ -48,10 +48,10 @@ export class AuthorizationController extends ControllerBase {
 		try {
 			const hash = md5(password);
 			/*
-				// Conexão via SQL
-				const cnn = new Connection(this.dbKey);
-				const user = await new UsuarioLoginRepository(cnn).Login(email, hash);
-			*/
+        // Conexão via SQL
+        const cnn = new Connection(this.dbKey);
+        const user = await new UsuarioLoginRepository(cnn).Login(email, hash);
+      */
 
 			// Conexão via Prisma
 			const user = await new UsuarioLoginPrismaRepository().Login(email, hash);
@@ -76,10 +76,10 @@ export class AuthorizationController extends ControllerBase {
 				return cache;
 			}
 			/*
-				Conexão via SQL
-				// const cnn = new Connection(this.dbKey);
-				// const user = await new UsuarioMeRepository(cnn).Me(this.user.id);
-			*/
+        Conexão via SQL
+        // const cnn = new Connection(this.dbKey);
+        // const user = await new UsuarioMeRepository(cnn).Me(this.user.id);
+      */
 
 			// Conexão via JSON API
 			// const user = await new UsuarioMeRESTRepository().Me(this.user.id);
