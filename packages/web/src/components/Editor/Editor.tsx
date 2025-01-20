@@ -4,14 +4,15 @@ import { useQuill } from 'react-quilljs';
 import styles from './editor.module.scss';
 
 import 'quill/dist/quill.snow.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { SocketIOClient } from '../../services/socket.services';
 
 interface IEditorProps {
 	id: string;
 	value?: string;
 }
 
-export default function Header(props: IEditorProps) {
+export default function Editor(props: IEditorProps) {
 	const docId = props.id;
 	const toolbar = [
 		[{ size: [] }],
@@ -42,6 +43,18 @@ export default function Header(props: IEditorProps) {
 	const { quill, Quill, quillRef } = useQuill();
 	// const { quillRef } = useQuill({ theme, modules });
 
+	const socketClient = new SocketIOClient({
+		id: 'fa1a1bcf-3d87-4626-8c0d-d7fd1255ac00',
+		nome: 'Eduardo Almeida',
+		url_foto: 'https://avatars.githubusercontent.com/u/3427820?v=4',
+		token: 'xxx',
+	});
+
+	useEffect(() => {
+		console.log('Dados recebidos:', { conteudo: editorValue });
+		socketClient.sendToRoom('edicao', 123, { conteudo: editorValue });
+	}, [editorValue]);
+
 	if (Quill && !quill) {
 		// For execute this line only once.
 		// Quill.register('modules/cursors', QuillCursors);
@@ -49,6 +62,12 @@ export default function Header(props: IEditorProps) {
 
 	if (quill) {
 		quill.on('text-change', (delta, oldDelta, source) => {
+			socketClient.connectToRoom('edicao', 123);
+
+			socketClient.onRoomEvent('edicao', 123, data => {
+				console.log('Dados recebidos:', data);
+			});
+
 			// console.log('Text change!');
 			// console.log(quill.getText()); // Get text only
 			// console.log(quill.getContents()); // Get delta contents

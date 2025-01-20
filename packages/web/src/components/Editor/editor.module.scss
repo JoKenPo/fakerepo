@@ -1,17 +1,15 @@
+.editor {
+	background-color: #f0f0f0;
+	width: 80%;
+	height: 80vh;
+	padding-bottom: 50px;
+	color: #000;
 
-	.editor {
-		background-color: #f0f0f0;
-		width: 80%;
-		color: #000;
+	.quill {
 
-		.quill {
-				height: 500px;
-				margin-bottom: 50px;
+		.ql-container {
+			background-color: #f0f0f0;
 
-			.ql-container {
-				background-color: #f0f0f0;
-
-			}
 		}
 	}
-
+}

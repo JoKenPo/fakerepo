@@ -233,7 +233,7 @@ export const IOSendToRoom = (
 export const IOServer = (io: SocketIO.Server) => {
 	io.use((socket, next) => {
 		// console.log(socket.handshake.headers);
-		console.log('SocketIO Connection');
+		// console.log('SocketIO Connection');
 		next();
 		if (
 			!socket.handshake.headers.key &&
@@ -251,6 +251,7 @@ export const IOServer = (io: SocketIO.Server) => {
 			'Bearer ' + String(socket.handshake.auth.token),
 			String(socket.handshake.headers.key),
 		);
+		console.log('user: ', user);
 		if (user && socket.handshake.auth.user.id === user.id) next();
 	});
 
@@ -260,7 +261,7 @@ export const IOServer = (io: SocketIO.Server) => {
 			process.env.NODE_ENV &&
 			process.env.NODE_ENV.toLowerCase() === 'development'
 		)
-			socket.handshake.headers.key = 'dev.com.br';
+			socket.handshake.headers.key = 'localhost';
 
 		// console.log(
 		// 	socket.handshake.headers.key,
