@@ -3,6 +3,15 @@ import { JWT } from 'next-auth/jwt';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { IActiveUser } from '../../../services/socket.services';
+
+interface NextAuthResponse {
+	user: IActiveUser;
+	auth: {
+		token: string;
+		refreshToken?: string;
+	};
+}
 
 export default NextAuth({
 	// Configure one or more authentication providers
@@ -37,10 +46,10 @@ export default NextAuth({
 						}),
 					});
 
-					const user = await response.json();
+					const user = (await response.json()) as NextAuthResponse;
 
 					if (response.ok && user) {
-						return user;
+						return user.user;
 					}
 					return null;
 				} catch (error) {
@@ -62,6 +71,8 @@ export default NextAuth({
 				// get
 				return {
 					...session,
+					...user,
+					...token,
 					activeSubscription: true,
 				};
 			} catch {
@@ -94,7 +105,13 @@ export default NextAuth({
 				 * in token which then will be available in the `session()` callback
 				 */
 				token.id_permissao = user.id_permissao;
-				// token.fullName = user.fullName
+				token.id = user.id;
+				token.nome = user.nome;
+				token.departamento = user.departamento;
+				token.id_permissao = user.id_permissao;
+				token.acesso = user.acesso;
+				token.url_foto = user.url_foto;
+				token.cliente = user.cliente;
 			}
 
 			return token;
@@ -103,6 +120,13 @@ export default NextAuth({
 			if (session.user) {
 				// ** Add custom params to user in session which are added in `jwt()` callback via `token` parameter
 				session.user.id_permissao = token.id_permissao;
+				session.user.id = token.id;
+				session.user.nome = token.nome;
+				session.user.departamento = token.departamento;
+				session.user.id_permissao = token.id_permissao;
+				session.user.acesso = token.acesso;
+				session.user.url_foto = token.url_foto;
+				session.user.cliente = token.cliente;
 				// session.user.fullName = token.fullName
 			}
 

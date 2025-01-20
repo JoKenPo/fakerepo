@@ -3,8 +3,9 @@ import { io, Socket } from 'socket.io-client';
 // socket.emit('ping');
 // socket.on('pong', () => console.log('pong'));
 
-interface IActiveUser {
+export interface IActiveUser {
 	id: string;
+	id_permissao: number;
 	nome: string;
 	url_foto: string;
 	token?: string;
@@ -20,6 +21,7 @@ export class SocketIOClient {
 	private user: IActiveUser;
 
 	constructor(user: IActiveUser) {
+		if (!user) return;
 		this.user = user;
 
 		// Inicializa o socket com autenticação e headers
@@ -46,17 +48,17 @@ export class SocketIOClient {
 	}
 
 	// Envia dados para uma sala específica
-	public sendToRoom(event: string, roomId: number, data?: any) {
+	public sendToRoom(event: string, roomId: string, data?: any) {
 		this.socket.emit('sendToRoom', event, roomId, data, this.user);
 	}
 
 	// Conecta a uma sala específica
-	public connectToRoom(event: string, roomId: number) {
+	public connectToRoom(event: string, roomId: string) {
 		this.socket.emit('connectToRoom', event, roomId, this.user);
 	}
 
 	// Desconecta de uma sala específica
-	public disconnectFromRoom(event: string, roomId: number) {
+	public disconnectFromRoom(event: string, roomId: string) {
 		this.socket.emit('disconnectToRoom', event, roomId, this.user);
 	}
 
@@ -68,7 +70,7 @@ export class SocketIOClient {
 	// Registra um listener para eventos em uma sala específica
 	public onRoomEvent(
 		event: string,
-		roomId: number,
+		roomId: string,
 		callback: (data: ISocketResponse) => void,
 	) {
 		const roomEvent = `${event}_${roomId}`;
@@ -78,7 +80,7 @@ export class SocketIOClient {
 	}
 
 	// Remove um listener específico
-	public offRoomEvent(event: string, roomId: number) {
+	public offRoomEvent(event: string, roomId: string) {
 		const roomEvent = `${event}_${roomId}`;
 		this.socket.off(roomEvent);
 	}

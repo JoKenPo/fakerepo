@@ -5,7 +5,9 @@ import styles from './editor.module.scss';
 
 import 'quill/dist/quill.snow.css';
 import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 import { SocketIOClient } from '../../services/socket.services';
+import { useRouter } from 'next/router';
 
 interface IEditorProps {
 	id: string;
@@ -14,6 +16,9 @@ interface IEditorProps {
 
 export default function Editor(props: IEditorProps) {
 	const docId = props.id;
+	const { data: session, status } = useSession();
+	const router = useRouter();
+
 	const toolbar = [
 		[{ size: [] }],
 		['bold', 'italic', 'underline', 'strike'],
@@ -43,16 +48,19 @@ export default function Editor(props: IEditorProps) {
 	const { quill, Quill, quillRef } = useQuill();
 	// const { quillRef } = useQuill({ theme, modules });
 
+	useEffect(() => {
+		if (status === 'unauthenticated' || !session) {
+			router.push('/');
+		}
+	}, [status, router]);
+
 	const socketClient = new SocketIOClient({
-		id: 'fa1a1bcf-3d87-4626-8c0d-d7fd1255ac00',
-		nome: 'Eduardo Almeida',
-		url_foto: 'https://avatars.githubusercontent.com/u/3427820?v=4',
-		token: 'xxx',
+		...session?.user,
 	});
 
 	useEffect(() => {
 		console.log('Dados recebidos:', { conteudo: editorValue });
-		socketClient.sendToRoom('edicao', 123, { conteudo: editorValue });
+		socketClient.sendToRoom('edicao', docId, { conteudo: editorValue });
 	}, [editorValue]);
 
 	if (Quill && !quill) {
@@ -62,9 +70,9 @@ export default function Editor(props: IEditorProps) {
 
 	if (quill) {
 		quill.on('text-change', (delta, oldDelta, source) => {
-			socketClient.connectToRoom('edicao', 123);
+			socketClient.connectToRoom('edicao', docId);
 
-			socketClient.onRoomEvent('edicao', 123, data => {
+			socketClient.onRoomEvent('edicao', docId, data => {
 				console.log('Dados recebidos:', data);
 			});
 

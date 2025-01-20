@@ -199,6 +199,7 @@ async function IOSendToRoomWorker(data: IIOSendToRoom) {
 
 const validateToken = (token: string, key: string): IPrismaLoggedUser => {
 	try {
+		console.log(token);
 		if (token && token.startsWith('Bearer ')) {
 			const result: any = tokenVerify(token.split(' ')[1], key);
 			if (result.data.type === 1) {
@@ -257,25 +258,19 @@ export const IOServer = (io: SocketIO.Server) => {
 
 	io.on('connection', socket => {
 		if (
-			// !socket.handshake.headers.key &&
+			!socket.handshake.headers.key &&
 			process.env.NODE_ENV &&
 			process.env.NODE_ENV.toLowerCase() === 'development'
 		)
 			socket.handshake.headers.key = 'localhost';
 
 		// console.log(
-		// 	socket.handshake.headers.key,
-		// 	'user',
-		// 	socket.handshake.auth.user,
-		// 	'auth',
-		// 	socket.handshake.headers.authorization,
+		//   socket.handshake.headers.key,
+		//   'user',
+		//   socket.handshake.auth.user,
+		//   'auth',
+		//   socket.handshake.headers.authorization,
 		// );
-
-		socket.handshake.auth.user = {
-			id: 'fa1a1bcf-3d87-4626-8c0d-d7fd1255ac00',
-			nome: 'Eduardo Almeida',
-			url_foto: 'https://avatars.githubusercontent.com/u/3427820?v=4',
-		};
 
 		// if (
 		// 	!socket.handshake.headers.key ||

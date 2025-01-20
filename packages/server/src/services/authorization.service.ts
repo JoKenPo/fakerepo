@@ -16,6 +16,7 @@ const jwtHash = (key: string): string =>
 	);
 
 export const tokenVerify = (token: string, key: string): any => {
+	console.log('token: ', token);
 	const HashKey = jwtHash(key);
 	return jwt.verify(token, HashKey);
 };
