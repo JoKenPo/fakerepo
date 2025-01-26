@@ -6,8 +6,9 @@ import styles from './editor.module.scss';
 import 'quill/dist/quill.snow.css';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { SocketIOClient } from '../../services/socket.services';
 import { useRouter } from 'next/router';
+import { Avatars } from '../Avatars/Avatars';
+import { useSocket } from '../../contexts/Socket.context';
 
 interface IEditorProps {
 	id: string;
@@ -17,6 +18,7 @@ interface IEditorProps {
 export default function Editor(props: IEditorProps) {
 	const docId = props.id;
 	const { data: session, status } = useSession();
+	const { socketClient } = useSocket();
 	const router = useRouter();
 
 	const toolbar = [
@@ -39,7 +41,7 @@ export default function Editor(props: IEditorProps) {
 	const theme = 'snow';
 
 	const modules = {
-		// cursor: true,
+		cursor: true,
 		toolbar,
 	};
 
@@ -54,11 +56,8 @@ export default function Editor(props: IEditorProps) {
 		}
 	}, [status, router]);
 
-	const socketClient = new SocketIOClient({
-		...session?.user,
-	});
-
 	useEffect(() => {
+		if (editorValue === '' || !session) return;
 		console.log('Dados recebidos:', { conteudo: editorValue });
 		socketClient.sendToRoom('edicao', docId, { conteudo: editorValue });
 	}, [editorValue]);
@@ -69,19 +68,21 @@ export default function Editor(props: IEditorProps) {
 	}
 
 	if (quill) {
+		if (!session) return null;
+
+		socketClient.connectToRoom('edicao', docId);
+
 		quill.on('text-change', (delta, oldDelta, source) => {
-			socketClient.connectToRoom('edicao', docId);
-
-			socketClient.onRoomEvent('edicao', docId, data => {
-				console.log('Dados recebidos:', data);
-			});
-
 			// console.log('Text change!');
 			// console.log(quill.getText()); // Get text only
 			// console.log(quill.getContents()); // Get delta contents
 			// console.log(quill.root.innerHTML); // Get innerHTML using quill
 			// console.log(quillRef.current.firstChild.innerHTML); // Get innerHTML using quillRef
 			setEditorValue(quill.getText());
+		});
+
+		socketClient.onRoomEvent('edicao', docId, data => {
+			console.log(' data: ', data);
 		});
 	}
 
@@ -99,6 +100,7 @@ export default function Editor(props: IEditorProps) {
 
 	return (
 		<div className={styles.editor}>
+			<Avatars />
 			<div id={'toolbar'}></div>
 			<p>{editorValue}</p>
 			<div id={props.id} ref={quillRef}></div>

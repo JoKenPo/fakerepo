@@ -8,7 +8,10 @@ export interface IActiveUser {
 	id_permissao: number;
 	nome: string;
 	url_foto: string;
-	token?: string;
+	auth: {
+		token: string;
+		refreshToken?: string;
+	};
 }
 
 interface ISocketResponse {
@@ -21,12 +24,18 @@ export class SocketIOClient {
 	private user: IActiveUser;
 
 	constructor(user: IActiveUser) {
-		if (!user) return;
+		if (!user || !user.auth) return;
 		this.user = user;
 
 		// Inicializa o socket com autenticação e headers
 		this.socket = io(process.env.SOCKETIO_DOMAIN || 'http://localhost:4003/', {
-			auth: { user, token: this.user.token },
+			extraHeaders: {
+				authorization: `Bearer ${this.user.auth?.token}`,
+			},
+			auth: {
+				user,
+				token: this.user.auth?.token,
+			},
 		});
 
 		// Configura handlers padrão
@@ -54,6 +63,8 @@ export class SocketIOClient {
 
 	// Conecta a uma sala específica
 	public connectToRoom(event: string, roomId: string) {
+		// console.log(' event: ', event, 'roomId: ', roomId);
+		// console.log(' user: ', this.user);
 		this.socket.emit('connectToRoom', event, roomId, this.user);
 	}
 

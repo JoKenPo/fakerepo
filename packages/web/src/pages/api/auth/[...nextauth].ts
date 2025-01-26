@@ -49,7 +49,13 @@ export default NextAuth({
 					const user = (await response.json()) as NextAuthResponse;
 
 					if (response.ok && user) {
-						return user.user;
+						return {
+							...user.user,
+							auth: {
+								token: user.auth.token,
+								refreshToken: user.auth.refreshToken,
+							},
+						};
 					}
 					return null;
 				} catch (error) {
@@ -104,14 +110,7 @@ export default NextAuth({
 				 * For adding custom parameters to user in session, we first need to add those parameters
 				 * in token which then will be available in the `session()` callback
 				 */
-				token.id_permissao = user.id_permissao;
-				token.id = user.id;
-				token.nome = user.nome;
-				token.departamento = user.departamento;
-				token.id_permissao = user.id_permissao;
-				token.acesso = user.acesso;
-				token.url_foto = user.url_foto;
-				token.cliente = user.cliente;
+				token.user = user;
 			}
 
 			return token;
@@ -119,15 +118,7 @@ export default NextAuth({
 		async session({ session, token }) {
 			if (session.user) {
 				// ** Add custom params to user in session which are added in `jwt()` callback via `token` parameter
-				session.user.id_permissao = token.id_permissao;
-				session.user.id = token.id;
-				session.user.nome = token.nome;
-				session.user.departamento = token.departamento;
-				session.user.id_permissao = token.id_permissao;
-				session.user.acesso = token.acesso;
-				session.user.url_foto = token.url_foto;
-				session.user.cliente = token.cliente;
-				// session.user.fullName = token.fullName
+				session.user = token.user;
 			}
 
 			return session;

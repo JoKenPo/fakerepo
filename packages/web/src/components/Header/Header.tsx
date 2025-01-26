@@ -7,7 +7,7 @@ export default function Header() {
 			<div className={styles.headerContent}>
 				<Link href={'/'}>
 					<img src="/images/gugu_sheets.png" alt="logo" />
-					<span>FakeXites</span>
+					<span>FakeDocs</span>
 				</Link>
 			</div>
 		</header>

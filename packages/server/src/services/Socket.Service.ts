@@ -233,8 +233,8 @@ export const IOSendToRoom = (
 
 export const IOServer = (io: SocketIO.Server) => {
 	io.use((socket, next) => {
-		// console.log(socket.handshake.headers);
-		// console.log('SocketIO Connection');
+		console.log(socket.handshake.headers);
+		console.log('SocketIO Connection');
 		next();
 		if (
 			!socket.handshake.headers.key &&
