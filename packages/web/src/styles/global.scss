@@ -32,8 +32,17 @@ body {
   color: var(--white);
 }
 
-body, input, textarea, select, button {
+body,
+input,
+textarea,
+select,
+button {
   font: 400 1rem "Roboto", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
 }
 
 button {
@@ -43,4 +52,8 @@ button {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+#__next {
+  height: 100%;
 }
