@@ -25,8 +25,17 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+# eslint
+.eslintcache
+
 # local env files
+.env
 .env*.local
+
+# secrets
+# /secret
+# /secrets
+# secrets.json
 
 # vercel
 .vercel

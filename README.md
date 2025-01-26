@@ -1,25 +1,53 @@
 # FakeRepo [Em Construção]
 
-<p align="center">
-🚧 wip 🚧
-</p>
+FakeRepo is an experimental project exploring concepts in web development, including:
 
-## Available Scripts
+- **Monorepo:** Managing both backend and frontend projects in a single repository.
+- **Real-time communication:** Utilizing Socket.IO to synchronize data between clients.
+- **Full-stack development:** Building a complete application, from backend to user interface.
 
-In the project directory, you can run:
+**Goal:**
 
-### `npm run server`
+The primary goal of this project is to create an application similar to Google Sheets, enabling collaborative editing and instant data updates among users.
 
-Runs the app in the development mode.\
-Open [http://localhost:4003](http://localhost:4003) to view it in the browser.
+## Technologies Used
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **Backend:** [List the technologies used in the backend, such as Node.js, Express, MongoDB, etc.]
+- **Frontend:** [List the technologies used in the frontend, such as React, Next.js, etc.]
+- **Communication:** Socket.IO
 
-### `npm run build`
+## Getting Started
 
-Build the Next front-end
+1. **Clone the repository:**
 
-### `npm run web`
+   ```bash
+   git clone https://github.com/JoKenPo/fakerepo
+   ```
 
-Runs the front-end [http://localhost:3000](http://localhost:3000)
+2. **Install dependencies:**
+
+   ```bash
+   npm install
+   ```
+
+3. **Start the server:**
+
+   ```bash
+   npm run dev:server
+   ```
+
+   This will start the backend server on port 4003.
+
+4. **Start the frontend:**
+
+   ```bash
+   npm run dev:web
+   ```
+
+   This will start the frontend on port 3000.
+
+Now you can access the application at http://localhost:3000 in your browser.
+
+## Contributing
+
+Feel free to contribute to FakeRepo! If you have any suggestions, corrections, or new features, open a pull request.
