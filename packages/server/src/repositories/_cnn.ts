@@ -1,4 +1,4 @@
-import knex, { Knex } from 'knex';
+import knex, { type Knex } from 'knex';
 import { GetSecret } from '../services/Secrets.service';
 export class Connection {
 	public Qry: Knex<any, unknown[]>;

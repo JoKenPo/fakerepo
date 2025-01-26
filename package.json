@@ -29,12 +29,13 @@
 	"keywords": [],
 	"devDependencies": {
 		"@types/babel__core": "^7.20.1",
-		"@typescript-eslint/eslint-plugin": "^6.4.0",
-		"@typescript-eslint/parser": "^6.4.0",
-		"eslint": "^8.47.0",
+		"@typescript-eslint/eslint-plugin": "^6.21.0",
+		"@typescript-eslint/parser": "^6.21.0",
+		"@typescript-eslint/typescript-estree": "^8.21.0",
+		"eslint": "^8.57.1",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-import-resolver-typescript": "^3.3.0",
-		"eslint-plugin-import": "^2.25.4",
+		"eslint-plugin-import": "^2.31.0",
 		"eslint-plugin-jsx-a11y": "^6.6.1",
 		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-prettier": "^5.0.0",
@@ -42,13 +43,11 @@
 		"eslint-plugin-react": "^7.26.1",
 		"eslint-plugin-react-hooks": "^4.2.0",
 		"husky": "^8.0.1",
-		"prettier": "^3.0.1",
-		"prisma": "^5.1.1"
+		"prettier": "^3.0.1"
 	},
 	"lint-staged": {
-		"*.{js,ts,tsx}": "eslint --fix",
+		"*.{js,ts,tsx}": "eslint --cache --fix",
 		"*.{js,jsx,css,md,ts,tsx}": "prettier --write"
 	},
-	"dependencies": {},
 	"packageManager": "pnpm@9.15.2+sha512.93e57b0126f0df74ce6bff29680394c0ba54ec47246b9cf321f0121d8d9bb03f750a705f24edc3c1180853afd7c2c3b94196d0a3d53d3e069d9e2793ef11f321"
 }
