@@ -1,0 +1,9 @@
+{
+  "singleQuote": true,
+  "trailingComma": "all",
+  "quoteProps": "consistent",
+  "endOfLine": "auto",
+  "arrowParens": "avoid",
+  "useTabs": true,
+  "tabWidth": 2
+}
