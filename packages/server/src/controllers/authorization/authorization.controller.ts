@@ -55,7 +55,7 @@ export class AuthorizationController extends ControllerBase {
 
 			// Conexão via Prisma
 			const user = await new UsuarioLoginPrismaRepository().Login(email, hash);
-			if (user) return { user, auth: getTokenData(user.id, this.dbKey, true) };
+			if (user) return { user, auth: getTokenData(user, this.dbKey, true) };
 		} catch (error) {
 			throw new Error(error);
 		}
@@ -118,7 +118,7 @@ export class AuthorizationController extends ControllerBase {
 		try {
 			return {
 				auth: getTokenData(
-					0,
+					{ id: '0', id_cliente: '0', id_permissao: '0' },
 					this.dbKey,
 					false,
 					expire ? expire * 24 * 60 : 43200,

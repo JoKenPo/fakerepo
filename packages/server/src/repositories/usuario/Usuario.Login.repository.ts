@@ -26,7 +26,7 @@ export const LoginResultPrismaMapper = {
 	id_permissao: 'id_permissao',
 	permissao: 'acesso',
 	url_foto: 'url_foto',
-	id_cliente: 'cliente.id',
+	id_cliente: 'id_cliente',
 	// cliente_nome: 'cliente.nome',
 };
 
@@ -100,7 +100,6 @@ export class UsuarioLoginPrismaRepository {
 						},
 						LoginResultPrismaMapper,
 					);
-
 					return result;
 				}
 			}
