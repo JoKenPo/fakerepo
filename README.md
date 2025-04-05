@@ -12,8 +12,8 @@ The primary goal of this project is to create an application similar to Google S
 
 ## Technologies Used
 
-- **Backend:** [List the technologies used in the backend, such as Node.js, Express, MongoDB, etc.]
-- **Frontend:** [List the technologies used in the frontend, such as React, Next.js, etc.]
+- **Backend:**  Node.js, Express, MongoDB, etc.
+- **Frontend:** React, Next.js, etc.
 - **Communication:** Socket.IO
 
 ## Getting Started
